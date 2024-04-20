@@ -42,5 +42,16 @@ public class Contato {
 			this.enderecos.remove(end);
 		}
 	}
+	
+	public List<Long> getIdsEnderecos(){
+		List<Long> idsEndereco = new ArrayList<Long>();
+		if (!this.enderecos.isEmpty()) {
+			for (Endereco end : this.enderecos) {
+				idsEndereco.add(end.getId());
+			}
+			return idsEndereco;
+		}
+		return null;
+	}
 
 }

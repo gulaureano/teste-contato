@@ -2,6 +2,7 @@ package br.com.teste.gustavo.laureano.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.teste.gustavo.laureano.domain.Contato;
 import br.com.teste.gustavo.laureano.domain.Endereco;
 import br.com.teste.gustavo.laureano.dto.ContatoAllDto;
-import br.com.teste.gustavo.laureano.dto.ContatoCadastradoDto;
-import br.com.teste.gustavo.laureano.dto.ContatoCreateDto;
+import br.com.teste.gustavo.laureano.dto.ContatoDto;
+import br.com.teste.gustavo.laureano.dto.ContatoEnderecoDto;
 import br.com.teste.gustavo.laureano.repository.ContatoRepository;
 
 @Service
@@ -41,7 +42,7 @@ public class ContatoService {
 		return contatosDto;
 	}
 
-	public ContatoCadastradoDto create(ContatoCreateDto contatoCreate) {
+	public String create(ContatoDto contatoCreate) {
 		Contato contato = new Contato();
 		contato.setNome(contatoCreate.getNome());
 		contato.setEmail(contatoCreate.getEmail());
@@ -56,22 +57,76 @@ public class ContatoService {
 		}
 
 		repository.save(contato);
-		return converterContatoCadastradoDto(contato);
+		return "Contato: " + contato.getNome() + " cadastrado com sucesso!";
 	}
 
-	private ContatoCadastradoDto converterContatoCadastradoDto(Contato contato) {
-		ContatoCadastradoDto contatoDto = new ContatoCadastradoDto();
-		contatoDto.setNome(contato.getNome());
-		contatoDto.setEmail(contato.getEmail());
-		contatoDto.setTelefone(contato.getTelefone());
-		contatoDto.setDataNascimento(contato.getDataNascimento());
-		if(!contato.getEnderecos().isEmpty()) {
-			for (Endereco end : contato.getEnderecos()) {
-				contatoDto.getIdEnderecos().add(end.getId());
+	public boolean update(ContatoDto contatoUpdate, Long id) {
+		Optional<Contato> contato = repository.findById(id);
+		if (contato.isPresent()) {
+			if (contatoUpdate.getNome() != null && !contatoUpdate.getNome().isEmpty()
+					&& !contatoUpdate.getNome().equals(contato.get().getNome())) {
+				contato.get().setNome(contatoUpdate.getNome());
 			}
+
+			if (contatoUpdate.getEmail() != null && !contatoUpdate.getEmail().isEmpty()
+					&& !contatoUpdate.getEmail().equals(contato.get().getEmail())) {
+				contato.get().setEmail(contatoUpdate.getEmail());
+			}
+
+			if (contatoUpdate.getTelefone() != null && !contatoUpdate.getTelefone().isEmpty()
+					&& !contatoUpdate.getTelefone().equals(contato.get().getTelefone())) {
+				contato.get().setTelefone(contatoUpdate.getTelefone());
+			}
+
+			if (contatoUpdate.getDataNascimento() != null
+					&& !contatoUpdate.getDataNascimento().equals(contato.get().getDataNascimento())) {
+				contato.get().setDataNascimento(contatoUpdate.getDataNascimento());
+			}
+
+			repository.save(contato.get());
+			return true;
 		}
-		contatoDto.setMensagemRetorno("Contato cadastrado com sucesso!");
-		return contatoDto;
+		return false;
+	}
+
+	public boolean adicionaEndereco(ContatoEnderecoDto contatoEndereco) {
+		Endereco endereco = enderecoService.findById(contatoEndereco.getIdEndereco());
+		Optional<Contato> contato = repository.findById(contatoEndereco.getId());
+		if (endereco != null && contato.isPresent()) {
+			if (!contato.get().getIdsEnderecos().contains(contatoEndereco.getIdEndereco())) {
+				contato.get().addEndereco(endereco);
+				repository.save(contato.get());
+				return true;
+			}
+			
+			return false;
+		}
+		return false;
+	}
+
+	public boolean removeEndereco(ContatoEnderecoDto contatoEndereco) {
+		Endereco endereco = enderecoService.findById(contatoEndereco.getIdEndereco());
+		Optional<Contato> contato = repository.findById(contatoEndereco.getId());
+		if (endereco != null && contato.isPresent()) {
+			if (!contato.get().getEnderecos().isEmpty()
+					&& contato.get().getIdsEnderecos().contains(contatoEndereco.getIdEndereco())) {
+
+				contato.get().removeEndereco(endereco);
+				repository.save(contato.get());
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public boolean delete(Long id) {
+		Optional<Contato> contato = repository.findById(id); 
+		if (contato.isPresent()) {
+			repository.delete(contato.get());
+			return true;
+		}
+		return false;
 	}
 
 }
