@@ -7,10 +7,10 @@
 		<version>2.7.18</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>br.com.gustavo.laureano</groupId>
+	<artifactId>teste</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>teste</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 
