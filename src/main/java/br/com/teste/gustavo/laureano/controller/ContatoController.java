@@ -25,41 +25,41 @@ import br.com.teste.gustavo.laureano.service.ContatoService;
 @RequestMapping("/contato")
 @RestController
 public class ContatoController {
-	
+
 	@Autowired
 	private ContatoService service;
-	
+
 	@GetMapping
-	public ResponseEntity<List<ContatoAllDto>> findAll(){
+	public ResponseEntity<List<ContatoAllDto>> findAll() {
 		List<ContatoAllDto> contatos = service.findAll();
 		return ResponseEntity.ok(contatos);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody @Valid ContatoDto contatoCreate){
+	public ResponseEntity<String> create(@RequestBody @Valid ContatoDto contatoCreate) {
 		return ResponseEntity.ok(service.create(contatoCreate));
 	}
-	
+
 	@PatchMapping("/{id}")
 	public ResponseEntity<String> update(@RequestBody ContatoUpdateDto contatoUpdate, @PathVariable Long id) {
 		service.update(contatoUpdate, id);
 		return ResponseEntity.ok("Informações do contato atualizadas com sucesso!");
 	}
-	
+
 	@PatchMapping("/removeEndereco")
-	public ResponseEntity<String> deleteEndereco(@RequestBody ContatoEnderecoDto contatoRemove){
+	public ResponseEntity<String> deleteEndereco(@RequestBody ContatoEnderecoDto contatoRemove) {
 		service.removeEndereco(contatoRemove);
 		return ResponseEntity.ok("Endereço removido do contato com sucesso!");
 	}
-	
+
 	@PutMapping("/addEndereco")
-	public ResponseEntity<String> addEndereco(@RequestBody ContatoEnderecoDto contatoAdd){
+	public ResponseEntity<String> addEndereco(@RequestBody ContatoEnderecoDto contatoAdd) {
 		service.adicionaEndereco(contatoAdd);
 		return ResponseEntity.ok("Endereço adicionado ao contato com sucesso!");
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable Long id){
+	public ResponseEntity<String> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.ok("Contato deletado com sucesso!");
 	}

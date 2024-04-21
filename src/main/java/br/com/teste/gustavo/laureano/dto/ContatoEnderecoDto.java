@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContatoEnderecoDto {
-	
+
 	private Long id;
 	private Long idEndereco;
 

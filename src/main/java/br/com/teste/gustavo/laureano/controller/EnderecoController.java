@@ -23,29 +23,29 @@ import br.com.teste.gustavo.laureano.service.EnderecoService;
 @RequestMapping("/endereco")
 @RestController
 public class EnderecoController {
-	
+
 	@Autowired
 	private EnderecoService service;
-	
+
 	@GetMapping
-	public ResponseEntity<List<EnderecoAllDto>> findAll(){
+	public ResponseEntity<List<EnderecoAllDto>> findAll() {
 		List<EnderecoAllDto> enderecos = service.findAll();
 		return ResponseEntity.ok(enderecos);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody @Valid EnderecoDto enderecoCreate){
+	public ResponseEntity<String> create(@RequestBody @Valid EnderecoDto enderecoCreate) {
 		return ResponseEntity.ok(service.create(enderecoCreate));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public ResponseEntity<String> update(@RequestBody EnderecoUpdateDto enderecoUpdate, @PathVariable Long id){
+	public ResponseEntity<String> update(@RequestBody EnderecoUpdateDto enderecoUpdate, @PathVariable Long id) {
 		service.update(enderecoUpdate, id);
 		return ResponseEntity.ok("Informações do endereco atualizadas com sucesso!");
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable Long id){
+	public ResponseEntity<String> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.ok("Endereco deletado com sucesso!");
 	}

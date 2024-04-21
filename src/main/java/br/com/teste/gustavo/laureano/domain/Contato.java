@@ -3,6 +3,7 @@ package br.com.teste.gustavo.laureano.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +18,10 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Contato {
-	
+
 	public Contato() {
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,28 +31,21 @@ public class Contato {
 	private LocalDate dataNascimento;
 	@ManyToMany
 	private List<Endereco> enderecos = new ArrayList<>();
-	
+
 	public void addEndereco(Endereco end) {
 		if (end != null) {
 			this.enderecos.add(end);
 		}
 	}
-	
+
 	public void removeEndereco(Endereco end) {
 		if (end != null) {
 			this.enderecos.remove(end);
 		}
 	}
-	
-	public List<Long> getIdsEnderecos(){
-		List<Long> idsEndereco = new ArrayList<Long>();
-		if (!this.enderecos.isEmpty()) {
-			for (Endereco end : this.enderecos) {
-				idsEndereco.add(end.getId());
-			}
-			return idsEndereco;
-		}
-		return null;
+
+	public List<Long> getIdsEnderecos() {
+		return this.enderecos.stream().map(Endereco::getId).collect(Collectors.toList());
 	}
 
 }

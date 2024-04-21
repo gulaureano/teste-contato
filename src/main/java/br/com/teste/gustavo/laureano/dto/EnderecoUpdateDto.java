@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnderecoUpdateDto {
-	
+
 	private String rua;
 	private String numero;
 	private String cep;

@@ -17,10 +17,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Endereco {
-	
+
 	public Endereco() {
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

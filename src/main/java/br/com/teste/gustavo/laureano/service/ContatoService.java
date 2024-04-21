@@ -1,8 +1,8 @@
 package br.com.teste.gustavo.laureano.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,16 +33,16 @@ public class ContatoService {
 	}
 
 	protected List<ContatoAllDto> converterContatoAllDto(List<Contato> contatos) {
-		List<ContatoAllDto> contatosDto = new ArrayList<>();
-		for (Contato contato : contatos) {
+		List<ContatoAllDto> contatosDto = contatos.stream().map(contato -> {
 			ContatoAllDto contatoDto = new ContatoAllDto();
 			contatoDto.setNome(contato.getNome());
 			contatoDto.setEmail(contato.getEmail());
 			contatoDto.setTelefone(contato.getTelefone());
 			contatoDto.setDataNascimento(contato.getDataNascimento());
 			contatoDto.setEnderecos(enderecoService.converterEnderecoAllDto(contato.getEnderecos()));
-			contatosDto.add(contatoDto);
-		}
+			return contatoDto;
+		}).collect(Collectors.toList());
+
 		return contatosDto;
 	}
 
@@ -54,18 +54,17 @@ public class ContatoService {
 		contato.setTelefone(contatoCreate.getTelefone());
 
 		if (contatoCreate.getIdEnderecos() != null) {
-			for (Long id : contatoCreate.getIdEnderecos()) {
+			contatoCreate.getIdEnderecos().forEach(id -> {
 				Endereco end = enderecoService.findById(id);
 				contato.addEndereco(end);
-			}
+			});
 		}
-
 		repository.save(contato);
 		return "Contato: " + contato.getNome() + " cadastrado com sucesso!";
 	}
 
 	public void update(ContatoUpdateDto contatoUpdate, Long id) throws ContatoInexistenteException {
-		if(id == null || id.equals("")) {
+		if (id == null) {
 			throw new NullPointerException("ID passado está vázio");
 		}
 		Optional<Contato> contato = repository.findById(id);
@@ -98,24 +97,27 @@ public class ContatoService {
 	public void adicionaEndereco(ContatoEnderecoDto contatoEndereco) {
 		Endereco endereco = enderecoService.findById(contatoEndereco.getIdEndereco());
 		if (endereco == null) {
-			throw new EnderecoInexistenteException("Não foi localizado contato com ID: " + contatoEndereco.getIdEndereco());
+			throw new EnderecoInexistenteException(
+					"Não foi localizado contato com ID: " + contatoEndereco.getIdEndereco());
 		}
 		Optional<Contato> contato = repository.findById(contatoEndereco.getId());
 		if (!contato.isPresent()) {
 			throw new ContatoInexistenteException("Não foi localizado contato com ID: " + contatoEndereco.getId());
 		}
-			if (!contato.get().getIdsEnderecos().contains(contatoEndereco.getIdEndereco())) {
-				contato.get().addEndereco(endereco);
-				repository.save(contato.get());
-				return;
-			}
-			throw new ContatoEnderecoRepetidoException("O contato: " + contato.get().getNome() +" já possui este endereço: " + endereco.getRua() +" n" + endereco.getNumero());
+		if (!contato.get().getIdsEnderecos().contains(contatoEndereco.getIdEndereco())) {
+			contato.get().addEndereco(endereco);
+			repository.save(contato.get());
+			return;
+		}
+		throw new ContatoEnderecoRepetidoException("O contato: " + contato.get().getNome()
+				+ " já possui este endereço: " + endereco.getRua() + " n" + endereco.getNumero());
 	}
 
 	public void removeEndereco(ContatoEnderecoDto contatoEndereco) {
 		Endereco endereco = enderecoService.findById(contatoEndereco.getIdEndereco());
 		if (endereco == null) {
-			throw new EnderecoInexistenteException("Não foi localizado endereço com ID: " + contatoEndereco.getIdEndereco());
+			throw new EnderecoInexistenteException(
+					"Não foi localizado endereço com ID: " + contatoEndereco.getIdEndereco());
 		}
 		Optional<Contato> contato = repository.findById(contatoEndereco.getId());
 		if (!contato.isPresent()) {
@@ -133,7 +135,7 @@ public class ContatoService {
 	}
 
 	public void delete(Long id) {
-		Optional<Contato> contato = repository.findById(id); 
+		Optional<Contato> contato = repository.findById(id);
 		if (contato.isPresent()) {
 			repository.delete(contato.get());
 			return;

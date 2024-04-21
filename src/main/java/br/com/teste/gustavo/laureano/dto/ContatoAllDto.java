@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ContatoAllDto {
-	
+
 	private String nome;
 	private String email;
 	private String telefone;

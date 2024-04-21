@@ -16,6 +16,4 @@ public class ErroCamposException {
 		this.mensagemErro = mensagemErro;
 	}
 	
-	
-
 }
