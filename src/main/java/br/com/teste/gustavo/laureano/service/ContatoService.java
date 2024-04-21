@@ -98,7 +98,7 @@ public class ContatoService {
 	public void adicionaEndereco(ContatoEnderecoDto contatoEndereco) {
 		Endereco endereco = enderecoService.findById(contatoEndereco.getIdEndereco());
 		if (endereco == null) {
-			throw new EnderecoInexistenteException("Endereço Inexistente no ID: " + contatoEndereco.getIdEndereco());
+			throw new EnderecoInexistenteException("Não foi localizado contato com ID: " + contatoEndereco.getIdEndereco());
 		}
 		Optional<Contato> contato = repository.findById(contatoEndereco.getId());
 		if (!contato.isPresent()) {
@@ -115,7 +115,7 @@ public class ContatoService {
 	public void removeEndereco(ContatoEnderecoDto contatoEndereco) {
 		Endereco endereco = enderecoService.findById(contatoEndereco.getIdEndereco());
 		if (endereco == null) {
-			throw new EnderecoInexistenteException("Endereço Inexistente no ID: " + contatoEndereco.getIdEndereco());
+			throw new EnderecoInexistenteException("Não foi localizado endereço com ID: " + contatoEndereco.getIdEndereco());
 		}
 		Optional<Contato> contato = repository.findById(contatoEndereco.getId());
 		if (!contato.isPresent()) {
