@@ -5,17 +5,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StandardError {
+public class ErroPadrao {
 	
 	
 	private String erro;
 	private String messagem;
 	
-	public StandardError() {
+	public ErroPadrao() {
 		super();
 	}
 
-	public StandardError(String erro, String messagem) {
+	public ErroPadrao(String erro, String messagem) {
 		super();
 		this.erro = erro;		
 		this.messagem = messagem;

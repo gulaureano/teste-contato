@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import br.com.teste.gustavo.laureano.domain.Endereco;
 import br.com.teste.gustavo.laureano.dto.EnderecoAllDto;
 import br.com.teste.gustavo.laureano.dto.EnderecoDto;
+import br.com.teste.gustavo.laureano.dto.EnderecoUpdateDto;
+import br.com.teste.gustavo.laureano.exception.EnderecoInexistenteException;
+import br.com.teste.gustavo.laureano.exception.IntegridadeEnderecoException;
 import br.com.teste.gustavo.laureano.repository.EnderecoRepository;
 
 @Service
@@ -20,10 +23,10 @@ public class EnderecoService {
 
 	public List<EnderecoAllDto> findAll() {
 		List<Endereco> enderecos = repository.findAll();
-		return converterContatoAllDto(enderecos);
+		return converterEnderecoAllDto(enderecos);
 	}
 
-	protected List<EnderecoAllDto> converterContatoAllDto(List<Endereco> enderecos) {
+	protected List<EnderecoAllDto> converterEnderecoAllDto(List<Endereco> enderecos) {
 		List<EnderecoAllDto> enderecosDto = new ArrayList<>();
 		for (Endereco endereco : enderecos) {
 			EnderecoAllDto enderecoDto = new EnderecoAllDto();
@@ -51,9 +54,11 @@ public class EnderecoService {
 		return "Novo endereço cadastrado com sucesso!";
 	}
 
-	public boolean update(EnderecoDto enderecoUpdate, Long id) {
+	public void update(EnderecoUpdateDto enderecoUpdate, Long id) {
 		Endereco endereco = findById(id);
-		if (endereco != null) {
+		if (endereco == null) {
+			throw new EnderecoInexistenteException("Endereço Inexistente no ID: " + id);
+		}
 			if (enderecoUpdate.getRua() != null && !enderecoUpdate.getRua().isEmpty()
 					&& !enderecoUpdate.getRua().equals(endereco.getRua())) {
 				endereco.setRua(enderecoUpdate.getRua());
@@ -69,19 +74,19 @@ public class EnderecoService {
 				endereco.setCep(enderecoUpdate.getCep());
 			}
 			repository.save(endereco);
-			return true;
-		}
-		return false;
 	}
 
-	public boolean delete(Long id) {
+	public void delete(Long id) {
 		// TODO adicionar excecao de ConstraintViolantion ao tentar excluir endereco relacionado ao contato, alem de outras excecoes
-		Optional<Endereco> endereco = repository.findById(id);
-		if (endereco.isPresent()) {
-			repository.delete(endereco.get());
-			return true;
+		Endereco endereco = findById(id);
+		if (endereco == null) {
+			throw new EnderecoInexistenteException("Endereço Inexistente no ID: " + id);
 		}
-		return false;
+		try {
+			repository.delete(endereco);
+		} catch (Exception e) {
+			throw new IntegridadeEnderecoException("O endereço: " + endereco.getRua() + ", n" + endereco.getNumero() + " está sendo utilizado em algum contato, remova-o do contato para poder deletar!");
+		}
 	}
 
 }

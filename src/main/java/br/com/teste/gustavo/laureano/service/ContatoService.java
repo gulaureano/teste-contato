@@ -12,6 +12,7 @@ import br.com.teste.gustavo.laureano.domain.Endereco;
 import br.com.teste.gustavo.laureano.dto.ContatoAllDto;
 import br.com.teste.gustavo.laureano.dto.ContatoDto;
 import br.com.teste.gustavo.laureano.dto.ContatoEnderecoDto;
+import br.com.teste.gustavo.laureano.dto.ContatoUpdateDto;
 import br.com.teste.gustavo.laureano.exception.ContatoEnderecoRepetidoException;
 import br.com.teste.gustavo.laureano.exception.ContatoInexistenteException;
 import br.com.teste.gustavo.laureano.exception.EnderecoInexistenteException;
@@ -39,7 +40,7 @@ public class ContatoService {
 			contatoDto.setEmail(contato.getEmail());
 			contatoDto.setTelefone(contato.getTelefone());
 			contatoDto.setDataNascimento(contato.getDataNascimento());
-			contatoDto.setEnderecos(enderecoService.converterContatoAllDto(contato.getEnderecos()));
+			contatoDto.setEnderecos(enderecoService.converterEnderecoAllDto(contato.getEnderecos()));
 			contatosDto.add(contatoDto);
 		}
 		return contatosDto;
@@ -63,7 +64,7 @@ public class ContatoService {
 		return "Contato: " + contato.getNome() + " cadastrado com sucesso!";
 	}
 
-	public void update(ContatoDto contatoUpdate, Long id) throws ContatoInexistenteException {
+	public void update(ContatoUpdateDto contatoUpdate, Long id) throws ContatoInexistenteException {
 		if(id == null || id.equals("")) {
 			throw new NullPointerException("ID passado está vázio");
 		}
