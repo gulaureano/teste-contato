@@ -36,7 +36,10 @@ public class EnderecoService {
 	}
 
 	public Endereco findById(Long idEndereco) {
-		return repository.getReferenceById(idEndereco);
+		Optional<Endereco> end = repository.findById(idEndereco);
+		if (end.isPresent()) {
+			return end.get();
+		} return null;		
 	}
 
 	public String create(EnderecoDto enderecoCreate) {

@@ -39,35 +39,27 @@ public class ContatoController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<String> update(@RequestBody ContatoDto contatoUpdate, @PathVariable Long id){
-		boolean alterado = service.update(contatoUpdate, id);
-		if (alterado) {
-			return ResponseEntity.ok("Informações do contato atualizadas com sucesso!");
-		} return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível encontrar o contato com esse ID: " + id);
+	public ResponseEntity<String> update(@RequestBody ContatoDto contatoUpdate, @PathVariable Long id) {
+		service.update(contatoUpdate, id);
+		return ResponseEntity.ok("Informações do contato atualizadas com sucesso!");
 	}
 	
 	@PatchMapping("/removeEndereco")
 	public ResponseEntity<String> deleteEndereco(@RequestBody ContatoEnderecoDto contatoRemove){
-		boolean removido = service.removeEndereco(contatoRemove);
-		if (removido) {
-			return ResponseEntity.ok("Endereço removido do contato com sucesso!");
-		} return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível encontrar o contato ou o endereço");
+		service.removeEndereco(contatoRemove);
+		return ResponseEntity.ok("Endereço removido do contato com sucesso!");
 	}
 	
 	@PutMapping("/addEndereco")
 	public ResponseEntity<String> addEndereco(@RequestBody ContatoEnderecoDto contatoAdd){
-		boolean adicionado = service.adicionaEndereco(contatoAdd);
-		if (adicionado) {
-			return ResponseEntity.ok("Endereço adicionado ao contato com sucesso!");
-		} return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível encontrar o contato ou o endereço");
+		service.adicionaEndereco(contatoAdd);
+		return ResponseEntity.ok("Endereço adicionado ao contato com sucesso!");
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id){
-		boolean deletado = service.delete(id);
-		if (deletado) {
-			return ResponseEntity.ok("Contato deletado com sucesso!");
-		} return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível encontrar o contato");
+		service.delete(id);
+		return ResponseEntity.ok("Contato deletado com sucesso!");
 	}
 
 }
