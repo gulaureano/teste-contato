@@ -7,14 +7,14 @@ https://teste-contato-4545.rj.r.appspot.com/
 
 #Instalação
 Para utilizara API, é necessário a instalação de JRE ( Java Runtime Environment) disponível para download e instalação no próprio site da Oracle, e para uma melhor experiência nas requisições de CRUD utilizando os métodos GET, POST, PUT, PATCH e DELETE, recomenda-se a aplicação Postman e para acessar o banco de dados H2, o browser da sua escolha, recomenda-se o Google Chrome.
-JRE: https://www.java.com/pt-BR/download/manual.jsp \n
-Postman: https://www.postman.com/downloads/
+- JRE: https://www.java.com/pt-BR/download/manual.jsp
+- Postman: https://www.postman.com/downloads/
 
 #Acesso ao Bando de Dados
 Para utilizar o Banco de Dados H2, no navegador, ao final do link da aplicação, adicionar o /h2-console que irá redirecioná-lo a tela de managment do H2 https://teste-contato-4545.rj.r.appspot.com/h2-console
 pode ser que a URL JDBC e o usuário estejam errados, por isso segue o caminho e o usuário corretos:
-URL JDBC = jdbc:h2:mem:testdb
-Username = admin
+- URL JDBC = jdbc:h2:mem:testdb
+- Username = admin
 
 #Utilização Contato
 
