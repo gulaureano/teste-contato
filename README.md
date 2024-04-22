@@ -7,7 +7,7 @@ https://teste-contato-4545.rj.r.appspot.com/
 
 #Instalação
 Para utilizara API, é necessário a instalação de JRE ( Java Runtime Environment) disponível para download e instalação no próprio site da Oracle, e para uma melhor experiência nas requisições de CRUD utilizando os métodos GET, POST, PUT, PATCH e DELETE, recomenda-se a aplicação Postman e para acessar o banco de dados H2, o browser da sua escolha, recomenda-se o Google Chrome.
-JRE: https://www.java.com/pt-BR/download/manual.jsp
+JRE: https://www.java.com/pt-BR/download/manual.jsp \n
 Postman: https://www.postman.com/downloads/
 
 #Acesso ao Bando de Dados
