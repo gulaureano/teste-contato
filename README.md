@@ -1,17 +1,17 @@
 # Projeto Teste Contato
 
-<p>Neste projeto é uma pequena API REST que faz CRUD das Entidades Contato e Endereço, sendo a relação entre elas Many-To-Many criando uma terceira tabela que as relaciona, esse projeto foi feito utilizando
-Java 11, framework Spring Boot 2.7.18, gerenciador de dependências Maven 3.9.5 e com o banco de dados em memória H2, este projeto encontra-se hospedada no Google Cloud Plataform no endereço:</p> 
+<p>Este projeto é uma API REST que faz CRUD das Entidades: Contato e Endereço, sendo a relação entre elas Many-To-Many criando uma terceira tabela que as relaciona, esse projeto foi feito utilizando
+Java 11, framework Spring Boot 2.7.18, gerenciador de dependências Maven 3.9.5 e com o banco de dados em memória H2, este projeto encontra-se hospedado no Google Cloud Plataform no endereço:</p> 
 https://teste-contato-4545.rj.r.appspot.com/
 
 
 <h2>Instalação</h2>
-<p>Para utilizara API, é necessário a instalação de JRE ( Java Runtime Environment) disponível para download e instalação no próprio site da Oracle, e para uma melhor experiência nas requisições de CRUD utilizando os métodos GET, POST, PUT, PATCH e DELETE, recomenda-se a aplicação Postman e para acessar o banco de dados H2, o browser da sua escolha, recomenda-se o Google Chrome.</p>
+<p>Para utilizara API, é necessário a instalação da JRE ( Java Runtime Environment) disponível para download e instalação no próprio site da Oracle, e para uma melhor experiência nas requisições de CRUD utilizando os métodos GET, POST, PUT, PATCH e DELETE, recomenda-se a aplicação Postman e para acessar o banco de dados H2, o browser da sua escolha, recomenda-se o Google Chrome.</p>
 - JRE: https://www.java.com/pt-BR/download/manual.jsp <br>
 - Postman: https://www.postman.com/downloads/
 
 <h2>Acesso ao Bando de Dados</h2>
-<p>Para utilizar o Banco de Dados H2, no navegador, ao final do link da aplicação, adicionar o /h2-console que irá redirecioná-lo a tela de managment do H2 https://teste-contato-4545.rj.r.appspot.com/h2-console
+<p>Para utilizar o Banco de Dados H2, no navegador, ao final do link da aplicação, adicionar o /h2-console que irá redirecioná-lo a tela de managment do H2: https://teste-contato-4545.rj.r.appspot.com/h2-console
 pode ser que a URL JDBC e o usuário estejam errados, por isso segue o caminho e o usuário corretos:</p>
 
 - URL JDBC = jdbc:h2:mem:testdb <br>
